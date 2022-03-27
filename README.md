@@ -183,9 +183,9 @@ You will use the `pandas` library to write the CSV file with `to_csv` function. 
 To test your code, you can run the autograder.
 ```
 (cmscm13600-env) skr@linux2:~/homework-0-getting-started-sjyk$ python autograder.py 
-Passed Test 1:  True
-Passed Test 2:  True
-Passed Test 3:  True
+Test (1/3) read_file, passed= True
+Test (2/3) write_csv, passed= True
+Test (3/3) write_csv, passed= True
 ```
 You should see three passed tests, which is a good indication you've done everything right. If you fail a test, there should be a helpful error message. To submit your code, simply run the following steps:
 ```
