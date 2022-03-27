@@ -41,35 +41,160 @@ You'll have to run `conda activate` before every homework assignment!
 
 
 ## Git: TODO 3
-The purpose of Git is to manage a project, or a set of files, as they change over time. Git stores this information in a data structure called a repository. A git repository contains, among other things, the following: A set of commit objects. A set of references to commit objects, called heads. 
+The purpose of Git is to manage a project, or a set of files, as they change over time. Git stores this information in a data structure called a repository. A git repository contains, among other things, the following: A set of commit objects. A set of references to commit objects, called heads. We will be using GitHub Classrooms to manage the submission of assignments in the course. You'll need a github account to proceed.
 
+We're first going to connect github to your login terminal. This involves creating a public and private key pair. This key pair helps to encrypt information that ensures data is protected during transmission. Private Key and public key are a part of encryption that encodes the information. Essentially, we create this key pair and keep the private key on our server and hand off the public key to Github.
 
+To start, create the keypair with the following command:
+```
+(cmscm13600-env) skr@linux2:~$ ssh-keygen -t ed25519 -C "<your github email address>"
+```
+Then, on the following prompts just hit enter.
+```
+> Enter a file in which to save the key (/Users/you/.ssh/id_algorithm): [Press enter]
+> Enter passphrase (empty for no passphrase): [Press enter]
+> Enter same passphrase again: [Press enter]
+```
+Finally, run the following command to print out your public key:
+```
+(cmscm13600-env) skr@linux2:~$ cat .ssh/id_ed25519.pub 
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMoPWw4adUWGKnBoEYcPxXRNW08P0vfvjZINPWrHDybz name@example.com
+```
+You should copy everything starting from `ssh-ed25519` and ending with your email to your clipboard.
 
-Every student in the class has a git repository (a place where you can store completed assignments). This git repository can be accessed from:
-[https://mit.cs.uchicago.edu/cmsc13600-spr-21/<your cnetid>.git]
+Go to [github.com] and click on your profile in the upper right hand corner. Then, click on settings. In the left column, you will see a menu that has a link "SSH and GPG Keys". Enter that menu item and add a new SSH key. Title the key CMSC 13600 and paste the data from your public key that you got above into the text area underneath the title.
+You can test that all of this works by running the following command:
+```
+(cmscm13600-env) skr@linux2:~$ ssh -T git@github.com
+The authenticity of host 'github.com (140.82.112.3)' can't be established.
+ECDSA key fingerprint is SHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com,140.82.112.3' (ECDSA) to the list of known hosts.
+Hi sjyk! You've successfully authenticated, but GitHub does not provide shell access.
+```
 
-The first thing to do is to open your terminal application, and ``clone`` this repository (NOTE replace < > with your CNET id!!!):
+## GitHub Classrooms: TODO 4
+Now, that we have eveerything ready, it is time to begin your first assignment.
+Each assignment will have a unique link. For example, this assignment will have a link:
+[https://classroom.github.com/a/AreoZqCa]
+Open that link with your web browser. 
+You'll be given a dropdown list with a list of CNET ids, please select yours and "accept" the assignment. 
+This will create a pre-populated repository for you with the assignment details.
+Once the repository is created, you will get a link that looks something like this:
 ```
-$ git clone https://mit.cs.uchicago.edu/cmsc13600-spr-21/<your cnet id>.git cmsc13600-submit
+https://github.com/CMSC-13600-Data-Engineering/homework-0-getting-started-<your github name>
 ```
-Your username and id is your CNET id and CNET password. This will create a new folder that is empty titled cmsc13600-submit. There is similarly a course repository where all of the homework materials will stored. Youshould clone this repository as well:
+Every student in the class has such a git repository (a place where you can store completed assignments). You can visit this repository from a web browser to see what is in it and explore it with an interface, or you can access it from any terminal using
 ```
-$ git clone https://mit.cs.uchicago.edu/skr/cmsc13600-public.git cmsc13600-materials 
+https://github.com/CMSC-13600-Data-Engineering/homework-0-getting-started-<your github name>.git
 ```
-This will create a new folder titled cmsc13600-materials. This folder will contain your homework assignments. Before you start an assingment you should sync your cloned repository with the online one:
-```
-$ cd cmsc13600-materials
-$ git pull
-```
-Then, we will tell you which of the pulled materials to copy over to your repository (cmsc13600-submit). Typically, they will be self-contained in a single folder with an obvious title (like hw0). 
 
-Try this out on your own! Copy the folder ``hw0`` to your newly cloned submission repository. Enter that repository from the command line and enter the copied ``hw0`` folder. There should be a single file in the folder called ``README.md``. Once you copy over files to your submission repository, you can work on them all you want. Once you are done, you need to add ALL OF THE FILES YOU WISH TO SUBMIT:
+We'll walk you through that process now. The first thing that we will do is to `clone` this repository to linux.cs.uchicago.edu. *Note* Every year students cut an paste the following instructions without realizing that my CNET id is "skr" and my github username is "sjyk". Please replace those with your own.
 ```
-$ git add README.md 
+(cmscm13600-env) skr@linux2:~$ git clone git@github.com:CMSC-13600-Data-Engineering/homework-0-getting-started-sjyk.git
 ```
-After adding your files, to submit your code you must run:
+To confirm, everything worked you can run the following command ``ls`` which prints out the files and folders in your current directory:
 ```
-$ git commit -m"My submission"
-$ git push
+(cmscm13600-env) skr@linux2:~$ ls
+cs  homework-0-getting-started-sjyk  html  schematext.sql
 ```
-We will NOT grade any code that is not added, committed, and pushed to your submission repository. You can confirm your submission by visiting the web interface[https://mit.cs.uchicago.edu/cmsc13600-spr-21/skr]
+You should see a new folder with the appropriate title. You can enter this folder with the following command:
+```
+(cmscm13600-env) skr@linux2:~$ cd homework-0-getting-started-sjyk/
+```
+In this folder, you'll see four files:
+```
+(cmscm13600-env) skr@linux2:~/homework-0-getting-started-sjyk$ ls
+README.md	stocks.dat	hw0.py  autograder.py
+```
+
+## Setting Up Your Development Environment: TODO 5
+Now, we're going to start programming (not really...) but we want you to get familar with writing code and testing code. There are a number of options you can use, we want you to pick a strategy that works for you and your comfort level.
+
+* Option 1. Use a terminal-based text editor. The simplest thing to do is to use a terminal based text editor. For example, I could use the `nano` program to create or edit an existing text file.
+```
+(cmscm13600-env) skr@linux2:~/homework-0-getting-started-sjyk$ nano <filename>
+```
+A tutorial is available here [https://www.howtogeek.com/howto/42980/the-beginners-guide-to-nano-the-linux-command-line-text-editor/]. This approach is great if you are mostly familar with a linux command line already. It also takes the least effort to setup. 
+
+* Option 2. Edit locally and upload to test. Another option, is to use CyberDuck [https://cyberduck.io/download/] to sync files from your machine to linux.cs.uchicago.edu. Open a new connection with CyberDuck, select "SFTP", and type in linux.cs.uchicago.edu as the URL. Then, you'll have to enter your CNET username and password. Once you successfully login, you'll be able to see a list of files and folders on the remote server. I like to use the "synchronize" feature to keep the remote folder updated with everything I have locally [https://docs.cyberduck.io/cyberduck/sync/]. This option allows you to use your own text editor to program.
+
+* Option 3. A Remote IDE. Finally, it is possible to use PyCharm to directly connect to a remote server [https://www.jetbrains.com/help/pycharm/remote-development-a.html] This is an advanced option (but probably the easiest to use once set up). We won't really go through this.
+
+* Option 4. Of course you are all free to program locally on your own laptops. Again, we'll standardize our instructions towards using linux.cs.uchicago.edu but you guys can figure out how to make those work on your own machines.
+
+## Writing and Submitting Code: TODO 6
+We'll start off with a simple Python scripting task to test everything out. The first step of this assignment is to install the `pandas` library.
+```
+(cmscm13600-env) skr@linux2:~/homework-0-getting-started-sjyk$ conda install pandas
+```
+
+### Assignment Objective
+In your homework folder, there is a file called `stocks.dat`. Each line of the file looks like this:
+```
+(cmscm13600-env) skr@linux2:~/homework-0-getting-started-sjyk$ head stocks.dat 
+A - Agilent Technologies
+AA - Alcoa
+AAC - Ares Acquisition
+AACE - Alexandria Agtech/Climate Innovation
+AACG - ATA Creativity Global
+AACO - Advancit Acquisition I
+AACP - Aeon Acquisition
+AACQ - Artius Acquisition
+AAIC - Arlington Asset Investment
+AAL - American Airlines
+```
+It has a ticker symbol, a dash, and a name. 
+
+Your job is to convert this file into a CSV file. A comma-separated values (CSV) file is a delimited text file that uses a comma to separate values. Each line of the file is a data record. Each record consists of one or more fields, separated by commas. The use of the comma as a field separator is the source of the name for this file format. A CSV file typically stores tabular data (numbers and text) in plain text, in which case each line will have the same number of fields. Your final CSV file will have two columns 'Ticker' and 'Name'.  
+
+### Parsing `stocks.dat`
+In your first todo, you will fill in the `read_file` function in `hw0.py`. 
+```
+"""
+!!!TODO!!!
+"""
+def read_file(filename):
+	'''Input: filename (location of stock.dat)
+	   Output: a list of tuples (ticker, name)
+	'''
+	return None
+```
+You will write a function that reads the file at the location `filename` and returns a list of tuples of the ticker symbol and the company name. Pay careful attention to how the strings are formatted in terms of leading and trailing spaces.
+
+### Creating a CSV File
+In your second todo, you will fill in the `write_csv` function in `hw0.py`. 
+```
+"""
+!!!TODO!!!
+"""
+def write_csv(parsed, outfile):
+	'''Input: a list of tuples (ticker,name), output location
+	   Output: None/Void, writes a file
+	'''
+	return None
+```
+You will use the `pandas` library to write the CSV file with `to_csv` function. If you are not familiar with Python yet, it is your responsibility to do independent study to figure out how all the pieces fit together. Here are the rough steps you need to do.
+* Create a `pandas` with two columns `ticker` and `name` and populate it with the data that you just parsed.
+* Set the index of this dataframe to be `ticker`.
+* Write this DataFrame to a csv file (location specified by `outfile`).
+
+### Testing and Submission
+To test your code, you can run the autograder.
+```
+(cmscm13600-env) skr@linux2:~/homework-0-getting-started-sjyk$ python autograder.py 
+Passed Test 1:  True
+Passed Test 2:  True
+Passed Test 3:  True
+```
+You should see three passed tests, which is a good indication you've done everything right. If you fail a test, there should be a helpful error message. To submit your code, simply run the following steps:
+```
+(cmscm13600-env) skr@linux2:~/homework-0-getting-started-sjyk$ git add hw0.py
+```
+```
+(cmscm13600-env) skr@linux2:~/homework-0-getting-started-sjyk$ git commit -m 'my first submission'
+```
+```
+(cmscm13600-env) skr@linux2:~/homework-0-getting-started-sjyk$ git push
+```
+We will NOT grade any code that is not added, committed, and pushed to your submission repository. You can confirm your submission by visiting the web interface. You can commit and push as many times as you want
