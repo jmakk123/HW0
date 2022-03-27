@@ -84,6 +84,7 @@ def test3():
 		print('Your csv file seems to be the wrong size')
 		return False
 
-print('Passed Test 1: ', test1())
-print('Passed Test 2: ',test2())
-print('Passed Test 3: ',test3())
+
+print('Test (1/3) read_file, passed=',test1())
+print('Test (2/3) write_csv, passed=',test2())
+print('Test (3/3) write_csv, passed=',test3())
