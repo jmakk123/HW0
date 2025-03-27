@@ -16,7 +16,6 @@ def write_csv(parsed, outfile):
 	parse_df = pd.DataFrame(parsed, columns=['ticker', 'name']).set_index('ticker').to_csv(outfile)
 	df_csv = parse_df.to_csv(outfile, index='ticker')
 
-	return df_csv
 
 if __name__ == "__main__": 
     write_csv(read_file('stocks.dat'), "output.csv")
