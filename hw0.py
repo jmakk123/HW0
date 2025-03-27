@@ -28,3 +28,6 @@ def write_csv(parsed, outfile):
 
 	return df_csv
 
+if __name__ == "__main__": 
+    data = read_file("stocks.dat")
+    write_csv(data, "stocks_output.csv")
