@@ -13,8 +13,7 @@ def write_csv(parsed, outfile):
 	   Output: None/Void, writes a file
 	'''
 
-	parse_df = pd.DataFrame(parsed, columns=['ticker', 'name']).set_index('ticker').to_csv(outfile)
-	df_csv = parse_df.to_csv(outfile, index='ticker')
+	pd.DataFrame(parsed, columns=['ticker', 'name']).set_index('ticker').to_csv(outfile)
 
 
 if __name__ == "__main__": 
