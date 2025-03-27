@@ -4,10 +4,11 @@ def read_file(filename):
 	'''Input: filename (location of stock.dat)
 	   Output: a list of tuples (ticker, name)
 	'''
-
-	df = pd.read_csv(filename, delimiter=' - ', names=['ticker', 'name']).itertuples(index=False, name=None)
-
-	return df
+	return [
+        (ticker, name) 
+        for ticker, name in pd.read_csv(filename, header=None)[0]
+            .str.split(' - ', n=1, expand=True)
+            .itertuples(index=False, name=None)]
 
 def write_csv(parsed, outfile):
 	'''Input: a list of tuples (ticker,name), output location
