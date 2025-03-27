@@ -27,3 +27,4 @@ def write_csv(parsed, outfile):
 	df_csv = parse_df.to_csv(outfile, index='ticker')
 
 	return df_csv
+
